@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setFilter } from 'redux/contacts/contacts.actions';
-import { addContact, removeContact } from 'redux/filter/filter.actions';
+import { addContact, removeContact } from 'redux/filter/filter.action';
 import { ContactForm } from './Phonebook/ContactForm';
 import { ContactList } from './Phonebook/ContactList';
 import { Filter } from './Phonebook/Filter';
@@ -9,6 +9,7 @@ import { Section } from './Phonebook/Section';
 
 export const App = () => {
   const contacts = useSelector(state => state.contacts);
+  console.log('contacts ', contacts);
   // const [contacts, setContacts] = useState(() => {
   //   const contactsInLS = localStorage.getItem('contacts');
   //   if (contactsInLS) {

@@ -1,3 +1,6 @@
+// import { persistReducer } from 'redux-persist';
+// import storage from 'redux-persist/lib/storage'; // defaults to localStorage for web
+
 const initState = [
   { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
   { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
@@ -6,6 +9,8 @@ const initState = [
 ];
 
 export const contactsReducer = (state = initState, action) => {
+  console.log('state ', state);
+  console.log('action ', action);
   switch (action.type) {
     case 'contacts/addContact':
       return [...state, action.payload];
@@ -16,3 +21,11 @@ export const contactsReducer = (state = initState, action) => {
       return state;
   }
 };
+
+// const persistConfig = {
+//   key: 'qwerty',
+//   storage,
+//   // whitelist: ['contacts'],
+// };
+
+// export const contactsReducer = persistReducer(persistConfig, contactsReducer1);
