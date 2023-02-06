@@ -1,8 +1,18 @@
-import { PropTypes } from 'prop-types';
 import { Box } from 'components/Box';
 import { InputStyled, LabelStyled } from './Phonebook.styled';
+import { useDispatch, useSelector } from 'react-redux';
+import { setFilter } from 'redux/filter/filter.slice';
 
-export const Filter = ({ filter, onChange }) => {
+export const Filter = () => {
+  const filter = useSelector(state => state.filter);
+
+  const dispatch = useDispatch();
+
+  const handleChangeFilter = event => {
+    const { value } = event.target;
+    dispatch(setFilter(value));
+  };
+
   return (
     <Box display="flex" flexDirection="column">
       <LabelStyled htmlFor="filter">Find contacts by name</LabelStyled>
@@ -11,13 +21,8 @@ export const Filter = ({ filter, onChange }) => {
         value={filter}
         type="text"
         name="filter"
-        onChange={onChange}
+        onChange={handleChangeFilter}
       />
     </Box>
   );
-};
-
-Filter.propTypes = {
-  filter: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
 };

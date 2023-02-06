@@ -1,4 +1,3 @@
-import { PropTypes } from 'prop-types';
 import { Box } from 'components/Box';
 import { TitleStyled } from './Phonebook.styled';
 
@@ -16,17 +15,20 @@ const sectionStyles = {
   as: 'section',
 };
 
-export const Section = ({ title, headingLevel = 'h1', children }) => {
+export const SectionPhonebook = ({ children }) => {
   return (
     <Box {...sectionStyles}>
-      <TitleStyled as={headingLevel}>{title}</TitleStyled>
+      <TitleStyled as={'h2'}>Phonebook</TitleStyled>
       {children}
     </Box>
   );
 };
 
-Section.propTypes = {
-  title: PropTypes.string.isRequired,
-  headingLevel: PropTypes.string,
-  // children: PropTypes.element,
+export const SectionContacts = ({ children }) => {
+  return (
+    <Box {...sectionStyles}>
+      <TitleStyled as={'h2'}>Contacts</TitleStyled>
+      {children}
+    </Box>
+  );
 };

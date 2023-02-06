@@ -1,4 +1,3 @@
-import { PropTypes } from 'prop-types';
 import { Box } from 'components/Box';
 import {
   ButtonStyled,
@@ -7,8 +6,14 @@ import {
   LabelStyled,
 } from './Phonebook.styled';
 import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { addContact } from 'redux/contacts/contacts.slice';
 
-export const ContactForm = ({ onSubmit }) => {
+export const ContactForm = () => {
+  const contacts = useSelector(state => state.contacts);
+
+  const dispatch = useDispatch();
+
   const [name, setName] = useState(() => localStorage.getItem('name') ?? '');
   const changeName = event => {
     const { value } = event.target;
@@ -25,6 +30,20 @@ export const ContactForm = ({ onSubmit }) => {
     setNumber(value);
   };
 
+  const handleSubmitForm = (event, name, number) => {
+    event.preventDefault();
+    //Контакт вже існує
+    if (contacts.some(contact => contact.name === name)) {
+      alert(`${name} is already in contacts.`);
+      clearName();
+      return;
+    }
+
+    //Інакше додає новий контакт
+    dispatch(addContact(name, number));
+    clearForm();
+  };
+
   const clearForm = () => {
     setName('');
     setNumber('');
@@ -38,11 +57,7 @@ export const ContactForm = ({ onSubmit }) => {
   };
 
   return (
-    <FormStyled
-      onSubmit={event => {
-        onSubmit(event, name, number) ? clearForm() : clearName();
-      }}
-    >
+    <FormStyled onSubmit={event => handleSubmitForm(event, name, number)}>
       <Box display="flex" flexDirection="column">
         <LabelStyled htmlFor="name">Name</LabelStyled>
         <InputStyled
@@ -73,8 +88,4 @@ export const ContactForm = ({ onSubmit }) => {
       <ButtonStyled type="submit">Add contact</ButtonStyled>
     </FormStyled>
   );
-};
-
-ContactForm.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
 };
